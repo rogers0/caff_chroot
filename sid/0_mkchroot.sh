@@ -8,6 +8,10 @@ SRC_ROOT=$(readlink -f $(dirname $0)/..)
 [ -e "$SCRIPT_ROOT/config_local" ] && . $SCRIPT_ROOT/config_local
 LOCAL_HOME=$(eval echo ~$(logname))
 
+# Install stretch first, and then upgrade to sid
+# Dirty fix for https://bugs.debian.org/904699
+DISTRO=stretch
+
 [ $LOCAL_UID -gt 0 ] && echo Please use root or sudo environment. && exit 1
 
 if [ -z "$1" ]; then
@@ -40,6 +44,10 @@ if [ -z "$1" ]; then
 
 elif [ "$1" = "chrooted" ]; then
 # script to run in chroot environment
+
+# Install stretch first, and then upgrade to sid
+# Dirty fix for https://bugs.debian.org/904699
+DISTRO=sid
 
 	echo "deb ${MIRROR} ${DISTRO} main contrib non-free" > /etc/apt/sources.list
 	if [ "${DISTRO}" != "sid" -a "${DISTRO}" != "unstable" -a "${DISTRO}" != "testing" ]; then
