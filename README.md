@@ -1,57 +1,38 @@
-# debian-kernel-cross
-Cross compile Debian kernel in chroot environment, start from armel for stretch/sid
+# caff-chroot
+Sign GPG key in chroot sid environment.
 
 
 ----
 Purpose
 ----
 
-To make a chroot cross build environment especially for kerenel under Debian.
-Currently working for Stretch/Sid on armel (marvell).
+To make a chroot environment especially for key signing under Debian.
+Currently working for Debian Sid.
 
 
 ----
 Howto
 ----
 
-Step0, make a chroot environment. The script will debootstrap a minimal rootfs for cross compiling.
+Step0, make a chroot environment. The script will debootstrap a minimal rootfs.
 
 	$ sudo ./0_mkchroot.sh
 
 Step1, get source code from Debian Kernel SCM. You could either choose to run this out-of or within chroot
 
-	$ sudo ./1_chroot_get-source.sh
+	$ sudo ./chroot_shell.sh
+	## Below is under chroot environment
+	$ caff 0x1234567890ABCDEF
+
+Step2 (Optional), you can maintain this chroot easily.
+
+	$ sudo ./apt-update.sh
 
 	or
 
-	$ sudo ./chroot_shell.sh
-	## Below is under chroot environment
-	$ ./debian-kernel-cross/sid/1_chroot_get-source.sh
-
-Step2, cross compile. You could either choose to run this out-of or within chroot.
-
-	$ sudo ./2_chroot_build-deb.sh
-
-	or
-
-	$ sudo ./chroot_shell.sh
-	## Below is under chroot environment
-	$ ./debian-kernel-cross/sid/2_chroot_build-deb.sh
-
-If something goes wrong, you can check up the Step2 script and start from the the blocked command again.
-
-
-----
-Status
-----
-
-The cross compiled armel kernel is confirmed to working on:
-
- - LS-WXL (Debian Stretch)
- - LS-WSXL (Debian Stretch)
- - LS-VL (Debian Stretch)
- - LS-WVL (Debian Stretch)
-
+	$ sudo ./chroot_shell.sh root
+	## Below is under chroot environment with root previlege
+	# apt update
 
 ----
 Credit

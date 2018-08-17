@@ -17,25 +17,9 @@ if [ $LOCAL_UID -eq 0 -a -d $CHROOT ]; then
 	grep $CHROOT/dev/pts /proc/mounts > /dev/null || chroot $CHROOT mount -t devpts devpts /dev/pts
 
 	BASENAME=$(basename $SRC_ROOT)
-	DEB_KERNEL_GIT=$(basename $DEB_KERNEL_DIR).git
-	LINUX_GIT=$(basename $LINUX_DIR).git
-	mkdir -p $CHROOT/$NORMALUSER/$BASENAME $CHROOT/$DEB_KERNEL_GIT $CHROOT/$LINUX_GIT
+	mkdir -p $CHROOT/$NORMALUSER/$BASENAME
 	grep "$CHROOT/$NORMALUSER/$BASENAME" /proc/mounts > /dev/null ||
 		mount --bind $SRC_ROOT $CHROOT/$NORMALUSER/$BASENAME
-	if ! grep "$CHROOT/$DEB_KERNEL_GIT" /proc/mounts > /dev/null; then
-		[ -n $DEB_KERNEL_DIR -a -d $DEB_KERNEL_DIR/.git ] &&
-			mount --bind ${DEB_KERNEL_DIR}/.git $CHROOT/$DEB_KERNEL_GIT
-	fi
-	if ! grep "$CHROOT/$LINUX_GIT" /proc/mounts > /dev/null; then
-		[ -n $LINUX_DIR -a -d $LINUX_DIR/.git ] &&
-			mount --bind ${LINUX_DIR}/.git $CHROOT/$LINUX_GIT
-	fi
-
-	[ ! -d $CCACHE_DIR ] && mkdir -p $CCACHE_DIR && chown $NORMALUSER_UID.$NORMALUSER_UID $CCACHE_DIR
-	[ ! -d $CHROOT/$NORMALUSER/.ccache ] && mkdir -p $CHROOT/$NORMALUSER/.ccache && \
-		chown $NORMALUSER_UID.$NORMALUSER_UID $CHROOT/$NORMALUSER/.ccache
-	grep $CHROOT/$NORMALUSER/.ccache /proc/mounts > /dev/null || \
-		mount --bind $CCACHE_DIR $CHROOT/$NORMALUSER/.ccache
 
 	if [ -e "$CHROOT$CHROOT_COUNT" ]; then
 		count=$(cat $CHROOT$CHROOT_COUNT)

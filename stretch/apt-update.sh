@@ -1,1 +1,0 @@
-../sid/apt-update.sh

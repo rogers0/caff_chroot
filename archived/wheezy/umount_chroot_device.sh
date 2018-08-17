@@ -1,1 +1,0 @@
-../jessie/umount_chroot_device.sh

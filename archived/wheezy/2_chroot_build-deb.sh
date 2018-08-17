@@ -1,1 +1,0 @@
-../jessie/2_chroot_build-deb.sh

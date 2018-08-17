@@ -1,23 +1,12 @@
 # Common Settings
 
 DISTRO=sid
-CHROOT=/data/${DISTRO}-kernel_rootfs
+CHROOT=/data/${DISTRO}-caff_rootfs
 CHROOT_COUNT=/.chroot_count
-NORMALUSER=crossbuild
+NORMALUSER=caff
 NORMALUSER_UID=2000	# the user ID inside chroot
 LOCAL_UID=$(id -u)  # the user ID where shared local git repo is saved
-PARALLEL=$(($(nproc)*2))
 MIRROR=https://deb.debian.org/debian
 APT_NO_PROXY=
 DEBOOTSTRAP_PATH=/pool/main/c/cdebootstrap
 DEBOOTSTRAP_DEB=cdebootstrap-static_0.7.7+b1_amd64.deb
-DEB_KERNEL_PATH=/$NORMALUSER/debian-kernel
-DEB_KERNEL_REPO=https://salsa.debian.org/kernel-team/linux.git
-DEB_KERNEL_BRANCH=${DISTRO} # master, sid, stretch, or stretch-backports, etc
-LINUX_REPO=https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linux
-LINUX_STABLE_REPO=https://kernel.googlesource.com/pub/scm/linux/kernel/git/stable/linux-stable
-UBUNTU_REPO= #git://kernel.ubuntu.com/ubuntu/linux.git # it's for jessie only
-DEB_KERNEL_DIR=~/debian-kernel
-LINUX_DIR=~/linux
-CCACHE_DIR=~/.ccache_chroot	# ccache folder to be mounted into chroot. chown to $NORMALUSER_UID
-HOST_ARCH=armel
